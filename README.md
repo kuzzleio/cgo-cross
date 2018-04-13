@@ -13,4 +13,4 @@
 
 ## Docker image
 
-Docker images are available on [DockerHub](https://hub.docker.com/r/kuzzleio/cgo-cross/).
+Docker images are available on [DockerHub](https://hub.docker.com/r/kuzzleio/).
