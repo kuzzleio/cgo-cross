@@ -10,10 +10,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       swig \
       libffi-dev \
       git \
-      vim \
-      file \
       gnupg \
       figlet \
+      curl \
       dirmngr
 
 RUN mkdir -p /usr/share/man/man1 && \
@@ -39,7 +38,7 @@ RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-386.tar.gz" && \
     go version
 
 ENV GOPATH /go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
+ENV PATH $GOPATH/bin:/usr/local/go/bin:/usr/local/bin:$PATH
 ENV GOARCH=386
 ENV GOOS=linux
 ENV CGO_ENABLED=1
@@ -48,5 +47,6 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-oracle
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOPATH/src/github.com/kuzzleio/sdk-go" && chmod -R 777 "$GOPATH"
 
 COPY build.sh /build.sh
+COPY test.sh /test.sh
 
 WORKDIR /go/src/github.com/kuzzleio/sdk-go
