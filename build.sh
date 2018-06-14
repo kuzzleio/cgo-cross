@@ -1,11 +1,20 @@
 #!/usr/bin/env bash
-set -xe
-
-# Install Go dependencies
-cd /go/src/github.com/kuzzleio/sdk-go && /usr/local/go/bin/go get ./...
+set -e
 
 # Build all languages
-cd internal/wrappers && make all
+sdks=(java cpp)
+cd internal/wrappers
 
-# Print cross-compilation proof
-figlet "$(objdump -f build/c/libkuzzlesdk.so | grep architecture | cut -d ';' -f1 | cut -d , -f1 | head -1 | cut -d ' ' -f2)"
+for sdk in ${sdks[@]}; do
+    echo -e "\n----------------------------------------------------------------\n"
+    figlet "$sdk SDK Build"
+    echo -e "\n----------------------------------------------------------------\n"
+    make $sdk
+
+    if [[ $? -ne 0 ]]; then
+      exit 1
+    fi
+
+done
+
+cd -

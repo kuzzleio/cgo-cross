@@ -13,9 +13,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       gnupg \
       figlet \
       curl \
-      dirmngr
-
-RUN mkdir -p /usr/share/man/man1 && \
+      dirmngr \
+      cucumber \
+      libblkid-dev \
+      e2fslibs-dev \
+      libboost-all-dev \
+      libaudit-dev \
+      cmake && \
+    mkdir -p /usr/share/man/man1 && \
     echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
     echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee /etc/apt/sources.list.d/webupd8team-java.list && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886 && \
@@ -27,10 +32,10 @@ RUN mkdir -p /usr/share/man/man1 && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /var/cache/oracle-jdk8-installer
 
-ENV GOLANG_VERSION 1.10.1
+ENV GOLANG_VERSION 1.10.3
 RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
     wget -O go.tgz "$url" && \
-    goRelSha256='72d820dec546752e5a8303b33b009079c15c2390ce76d67cf514991646c6127b' && \
+    goRelSha256='fa1b0e45d3b647c252f51f5e1204aba049cde4af177ef9f2181f43004f901035' && \
     echo "${goRelSha256} *go.tgz" | sha256sum -c - && \
     tar -C /usr/local -xzf go.tgz && \
     rm go.tgz && \
@@ -44,7 +49,8 @@ ENV GOOS=linux
 ENV CGO_ENABLED=1
 ENV JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOPATH/src/github.com/kuzzleio/sdk-go" && chmod -R 777 "$GOPATH"
+RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOPATH/src/github.com/kuzzleio/sdk-go" && \
+    chmod -R 655 "$GOPATH"
 
 COPY build.sh /build.sh
 COPY test.sh /test.sh
