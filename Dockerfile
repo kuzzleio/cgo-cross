@@ -1,41 +1,25 @@
-FROM amd64/debian:stretch-slim
+FROM i386/debian:stretch-slim
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-      g++ \
-      gcc \
-      libc6-dev \
-      make \
-      pkg-config \
-      build-essential \
-      swig \
-      libffi-dev \
-      git \
-      gnupg \
-      figlet \
-      curl \
-      dirmngr \
-      cucumber \
-      libblkid-dev \
-      e2fslibs-dev \
-      libboost-all-dev \
-      libaudit-dev \
-      cmake && \
-    mkdir -p /usr/share/man/man1 && \
-    echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-    echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee /etc/apt/sources.list.d/webupd8team-java.list && \
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886 && \
-    apt-get update && \
-    apt-get install -y oracle-java8-installer && \
-    apt-get install -y oracle-java8-set-default && \
-    apt-get install -y gradle && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /var/cache/oracle-jdk8-installer
+RUN apt-get update && apt-get install -y --no-install-recommends wget unzip gnupg ca-certificates
+
+# NDK
+ENV ANDROID_NDK_HOME /opt/android-ndk
+ENV ANDROID_NDK_VERSION r17b
+
+RUN mkdir /opt/android-ndk-tmp
+RUN cd /opt/android-ndk-tmp
+RUN wget https://dl.google.com/android/repository/android-ndk-"${ANDROID_NDK_VERSION}"-linux-x86_64.zip
+RUN unzip android-ndk-${ANDROID_NDK_VERSION}-linux-x86_64.zip
+RUN mv ./android-ndk-${ANDROID_NDK_VERSION} ${ANDROID_NDK_HOME}
+RUN cd ${ANDROID_NDK_HOME}
+RUN rm -rf /opt/android-ndk-tmp
+
+ENV PATH ${PATH}:${ANDROID_NDK_HOME}
 
 ENV GOLANG_VERSION 1.10.3
-RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
+RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-386.tar.gz" && \
     wget -O go.tgz "$url" && \
-    goRelSha256='fa1b0e45d3b647c252f51f5e1204aba049cde4af177ef9f2181f43004f901035' && \
+    goRelSha256='3d5fe1932c904a01acb13dae07a5835bffafef38bef9e5a05450c52948ebdeb4' && \
     echo "${goRelSha256} *go.tgz" | sha256sum -c - && \
     tar -C /usr/local -xzf go.tgz && \
     rm go.tgz && \
@@ -44,13 +28,11 @@ RUN url="https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz" && \
 
 ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:/usr/local/bin:$PATH
-ENV GOARCH=amd64
+ENV GOARCH=386
 ENV GOOS=linux
-ENV CGO_ENABLED=1
-ENV JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOPATH/src/github.com/kuzzleio/sdk-go" && \
-    chmod -R 655 "$GOPATH"
+    chmod -R 777 "$GOPATH"
 
 COPY build.sh /build.sh
 COPY test.sh /test.sh
