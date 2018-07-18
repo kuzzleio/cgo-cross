@@ -2,7 +2,7 @@
 set -e
 
 # Build all languages
-sdks=(java cpp)
+sdks=(android)
 cd internal/wrappers
 
 for sdk in ${sdks[@]}; do
@@ -12,7 +12,7 @@ for sdk in ${sdks[@]}; do
     make $sdk
 
     if [[ $? -ne 0 ]]; then
-      exit 1
+	exit 1
     fi
 
 done
