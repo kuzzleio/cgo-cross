@@ -92,6 +92,8 @@ RUN mkdir $ANDROID_HOME && \
     rm sdk.zip && \
     yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
 
+ENV JAVA_HOME=
+
 COPY build.sh /build.sh
 COPY test.sh /test.sh
 
