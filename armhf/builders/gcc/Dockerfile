@@ -1,9 +1,9 @@
-FROM sdk-cross:golang-armhf
+FROM kuzzleio/sdk-cross:golang-armhf
 
 LABEL io.kuzzle.vendor="Kuzzle <support@kuzzle.io>"
 
 RUN dpkg --add-architecture armhf && apt-get update && \
-    apt-get install -y git gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf cmake libboost-test-dev:armhf \
+    apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf cmake libboost-test-dev:armhf \
         libboost-thread-dev:armhf libboost-system-dev:armhf libboost-regex-dev:armhf \
         libboost-date-time-dev:armhf libboost-program-options-dev:armhf libboost-filesystem-dev:armhf && \
     apt-get clean

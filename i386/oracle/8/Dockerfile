@@ -14,6 +14,7 @@ RUN mkdir /usr/share/man/man1 && \
     mkdir /opt/gradle && \
     unzip -d /opt/gradle gradle-4.5.1-bin.zip && \
     rm gradle-4.5.1-bin.zip && \
+    apt-get purge -y software-properties-common dirmngr && \
     apt-get clean && \
     rm -rf /var/cache/oracle-jdk8-installer
 

@@ -2,8 +2,6 @@
 
 _Custom cross compilation/testing containers using docker images._
 
-## Compatibility
-
 ## Linux
 
 ### amd64 & i386
@@ -54,7 +52,6 @@ Available runners:
 
 
 ## [LICENSE](https://github.com/kuzzleio/cgo-cross/blob/master/LICENSE)
-
 
 > Docker images are available on [DockerHub](https://hub.docker.com/r/kuzzlio/sdk-cross).
 

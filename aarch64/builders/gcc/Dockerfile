@@ -1,4 +1,4 @@
-FROM sdk-cross:golang-aarch64
+FROM kuzzleio/sdk-cross:golang-aarch64
 
 LABEL io.kuzzle.vendor="Kuzzle <support@kuzzle.io>"
 
