@@ -1,4 +1,4 @@
-FROM sdk-cross:golang-armv7
+FROM sdk-cross:golang-armhf
 
 LABEL io.kuzzle.vendor="Kuzzle <support@kuzzle.io>"
 
