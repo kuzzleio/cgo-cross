@@ -13,6 +13,8 @@ RUN mkdir /opt/android-ndk-tmp && \
     mv ./android-ndk-${ANDROID_NDK_VERSION} ${ANDROID_NDK_HOME} && \
     cd ${ANDROID_NDK_HOME} && \
     rm -rf /opt/android-ndk-tmp && \
+    # Python dependency
+    apt-get update && apt-get install -y python && apt-get clean && \
     # Android SDK
     mkdir $ANDROID_HOME && \
     cd $ANDROID_HOME && \
