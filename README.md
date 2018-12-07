@@ -35,7 +35,7 @@ Available builders:
 
 Available runners:
 
-* C++: _Cucumber, Libboost._
+* C++: _Cucumber, Libboost, Valgrind._
 
 | arch\package  |           C++          |
 |:-------------:|:----------------------:|
