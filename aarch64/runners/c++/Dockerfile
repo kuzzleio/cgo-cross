@@ -9,8 +9,7 @@ RUN [ "cross-build-start" ]
 RUN apt-get update && \
     apt-get install -y make cucumber libboost-test-dev \
     libboost-thread-dev libboost-system-dev libboost-regex-dev \
-    libboost-date-time-dev libboost-program-options-dev libboost-filesystem-dev \
-    valgrind && \
+    libboost-date-time-dev libboost-program-options-dev libboost-filesystem-dev && \
     apt-get clean
 
 RUN [ "cross-build-end" ]
